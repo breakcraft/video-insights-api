@@ -1,0 +1,409 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Video Insights Plugin",
+    "version": "1.0.0",
+    "description": "This API allows for video insights, including metadata retrieval, transcripts, comments, and visual analysis."
+  },
+  "servers": [
+    {
+      "url": "https://raw.githubusercontent.com/breakcraft/breakcraft.github.io/main/videoinsights_plugin_structure.json",
+      "description": "Main API server"
+    }
+  ],
+  "paths": {
+    "/metadata": {
+      "get": {
+        "summary": "Gets the metadata for a YouTube video",
+        "operationId": "getMetadata",
+        "parameters": [
+          {
+            "name": "video_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The video ID of the YouTube video."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "publishedAt": {
+                      "type": "string"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "license": {
+                      "type": "string"
+                    },
+                    "madeForKids": {
+                      "type": "boolean"
+                    },
+                    "duration": {
+                      "type": "string"
+                    },
+                    "statistics": {
+                      "type": "object",
+                      "properties": {
+                        "viewCount": {
+                          "type": "integer"
+                        },
+                        "likeCount": {
+                          "type": "integer"
+                        },
+                        "favoriteCount": {
+                          "type": "integer"
+                        },
+                        "commentCount": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transcript": {
+      "get": {
+        "summary": "Gets the transcript for a YouTube video",
+        "operationId": "getTranscript",
+        "parameters": [
+          {
+            "name": "video_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The video ID of the YouTube video."
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            },
+            "description": "The transcript page number to get. Defaults to 0 and increments by 1 for long transcripts."
+          },
+          {
+            "name": "timestamped",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "description": "Whether the transcript should include the timestamp values. Defaults to false."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamped": {
+                      "type": "boolean"
+                    },
+                    "transcript": {
+                      "type": "string"
+                    },
+                    "returned_page": {
+                      "type": "integer"
+                    },
+                    "has_more_pages": {
+                      "type": "boolean"
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "publishedAt": {
+                          "type": "string"
+                        },
+                        "tags": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "license": {
+                          "type": "string"
+                        },
+                        "madeForKids": {
+                          "type": "boolean"
+                        },
+                        "duration": {
+                          "type": "string"
+                        },
+                        "statistics": {
+                          "type": "object",
+                          "properties": {
+                            "viewCount": {
+                              "type": "integer"
+                            },
+                            "likeCount": {
+                              "type": "integer"
+                            },
+                            "favoriteCount": {
+                              "type": "integer"
+                            },
+                            "commentCount": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comments": {
+      "get": {
+        "summary": "Get the top 10 comments for a YouTube video",
+        "operationId": "getComments",
+        "parameters": [
+          {
+            "name": "video_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The video ID of the YouTube video."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "timestamped": {
+                      "type": "boolean"
+                    },
+                    "comments": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "author": {
+                            "type": "string"
+                          },
+                          "comment": {
+                            "type": "string"
+                          },
+                          "likeCount": {
+                            "type": "integer"
+                          },
+                          "publishedAt": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "returned_page": {
+                      "type": "integer"
+                    },
+                    "has_more_pages": {
+                      "type": "boolean"
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "publishedAt": {
+                          "type": "string"
+                        },
+                        "tags": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "license": {
+                          "type": "string"
+                        },
+                        "madeForKids": {
+                          "type": "boolean"
+                        },
+                        "duration": {
+                          "type": "string"
+                        },
+                        "statistics": {
+                          "type": "object",
+                          "properties": {
+                            "viewCount": {
+                              "type": "integer"
+                            },
+                            "likeCount": {
+                              "type": "integer"
+                            },
+                            "favoriteCount": {
+                              "type": "integer"
+                            },
+                            "commentCount": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/media_file_visual_analysis": {
+      "get": {
+        "summary": "Executes a visual analysis of the media file given a query about it",
+        "operationId": "visualAnalysis",
+        "parameters": [
+          {
+            "name": "file_uuid",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique identifier of the uploaded media file."
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The query about the visual content of the media file."
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            },
+            "description": "The page number to retrieve. Defaults to 0."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "query_response": {
+                      "type": "string"
+                    },
+                    "returned_page": {
+                      "type": "integer"
+                    },
+                    "has_more_pages": {
+                      "type": "boolean"
+                    },
+                    "total_num_pages": {
+                      "type": "integer"
+                    },
+                    "in_progress": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user_feedback": {
+      "post": {
+        "summary": "Submit feedback to the Video Insights team",
+        "operationId": "submitFeedback",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "feedback": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "feedback"
+                ]
+              }
+            }
+          },
+          "description": "The feedback content to submit"
+        },
+        "responses": {
+          "200": {
+            "description": "Feedback submitted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
