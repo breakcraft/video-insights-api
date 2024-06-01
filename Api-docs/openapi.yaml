@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  title: Video Insights Plugin API
+  version: 1.0.0
+  description: API for accessing the Video Insights Plugin configuration.
+servers:
+  - url: https://raw.githubusercontent.com/breakcraft/breakcraft.github.io/main
+    description: GitHub Raw Content Server
+paths:
+  /videoinsights_plugin_structure.json:
+    get:
+      summary: Get Video Insights Plugin Structure
+      operationId: getPluginStructure
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  overview:
+                    type: object
+                    properties:
+                      summary:
+                        type: string
+                      description:
+                        type: string
+                  video_metadata:
+                    type: object
+                    properties:
+                      description:
+                        type: string
+                      endpoint:
+                        type: string
+                      parameters:
+                        type: object
+                        properties:
+                          video_id:
+                            type: string
+                            description: The ID of the video.
+                  transcript:
+                    type: object
+                    properties:
+                      description:
+                        type: string
+                      endpoint:
+                        type: string
+                      parameters:
+                        type: object
+                        properties:
+                          video_id:
+                            type: string
+                            description: The ID of the video.
+                          page:
+                            type: integer
+                            default: 0
+                          timestamped:
+                            type: boolean
+                            default: false
+                  comments:
+                    type: object
+                    properties:
+                      description:
+                        type: string
+                      endpoint:
+                        type: string
+                      parameters:
+                        type: object
+                        properties:
+                          video_id:
+                            type: string
+                            description: The ID of the video.
+                  visual_analysis:
+                    type: object
+                    properties:
+                      description:
+                        type: string
+                      endpoint:
+                        type: string
+                      parameters:
+                        type: object
+                        properties:
+                          file_uuid:
+                            type: string
+                            description: The unique identifier of the media file.
+                          query:
+                            type: string
+                            description: The query about the visual content.
+                          page:
+                            type: integer
+                            default: 0
+                  user_feedback:
+                    type: object
+                    properties:
+                      description:
+                        type: string
+                      endpoint:
+                        type: string
+                      parameters:
+                        type: object
+                        properties:
+                          feedback:
+                            type: string
+                          email:
+                            type: string
